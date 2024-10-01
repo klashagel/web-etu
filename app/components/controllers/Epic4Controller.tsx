@@ -10,7 +10,7 @@ interface Epic4Props {
 const Epic4Controller: React.FC<Epic4Props> = ({ controller, onClick, onDoubleClick, isSelected }) => {
   return (
     <div 
-      className={`p-4 rounded-lg shadow hover:shadow-md transition-shadow ${
+      className={`w-full h-full p-4 rounded-lg shadow hover:shadow-md transition-shadow ${
         isSelected ? 'bg-blue-200' : 'bg-blue-100'
       }`}
       onClick={onClick}

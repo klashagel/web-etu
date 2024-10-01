@@ -10,8 +10,8 @@ interface UnknownProps {
 const UnknownController: React.FC<UnknownProps> = ({ controller, onClick, onDoubleClick, isSelected }) => {
   return (
     <div 
-      className={`p-4 rounded-lg shadow hover:shadow-md transition-shadow ${
-        isSelected ? 'bg-gray-300' : 'bg-gray-100'
+      className={`w-full h-full p-4 rounded-lg shadow hover:shadow-md transition-shadow ${
+        isSelected ? 'bg-red-200' : 'bg-red-100'
       }`}
       onClick={onClick}
       onDoubleClick={onDoubleClick}

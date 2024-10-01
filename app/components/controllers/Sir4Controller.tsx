@@ -10,7 +10,7 @@ interface Sir4Props {
 const Sir4Controller: React.FC<Sir4Props> = ({ controller, onClick, onDoubleClick, isSelected }) => {
   return (
     <div 
-      className={`p-4 rounded-lg shadow hover:shadow-md transition-shadow ${
+      className={`w-full h-full p-4 rounded-lg shadow hover:shadow-md transition-shadow ${
         isSelected ? 'bg-green-200' : 'bg-green-100'
       }`}
       onClick={onClick}

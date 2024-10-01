@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Epic4Controller from '../components/controllers/Epic4Controller';
 import Sir4Controller from '../components/controllers/Sir4Controller';
 import UnknownController from '../components/controllers/UnknownController';
+import DraggableController from '../components/DraggableController';
 import { useRouter } from 'next/navigation';
 
 interface Controller {
@@ -11,7 +12,7 @@ interface Controller {
   STATUS: number;
   IP: string;
   CTRLTYPE: string;
-  Controller: any; // Replace 'any' with a more specific type if possible
+  Controller: any;
 }
 
 const Dashboard = () => {
@@ -41,7 +42,7 @@ const Dashboard = () => {
     router.push(`/controller/${controller.IP}`);
   };
 
-  const renderController = (controller: Controller) => {
+  const renderController = (controller: Controller, index: number) => {
     const props = {
       controller,
       onClick: () => handleControllerClick(controller),
@@ -49,25 +50,40 @@ const Dashboard = () => {
       isSelected: controller.IP === selectedController,
     };
 
+    let ControllerComponent;
     switch (controller.CTRLTYPE) {
       case 'EPIC4':
-        return <Epic4Controller {...props} />;
+        ControllerComponent = Epic4Controller;
+        break;
       case 'SIR4':
-        return <Sir4Controller {...props} />;
+        ControllerComponent = Sir4Controller;
+        break;
       default:
-        return <UnknownController {...props} />;
+        ControllerComponent = UnknownController;
     }
+
+    // Calculate initial grid position with increased horizontal spacing
+    const columns = 3; // Reduced number of columns for more horizontal space
+    const itemWidth = 300; // Increased width
+    const itemHeight = 200; // Keep the same height
+    const horizontalSpacing = 50; // Increased horizontal spacing
+    const verticalSpacing = 20; // Keep the same vertical spacing
+
+    const initialX = (index % columns) * (itemWidth + horizontalSpacing);
+    const initialY = Math.floor(index / columns) * (itemHeight + verticalSpacing);
+
+    return (
+      <DraggableController key={controller.IP} initialX={initialX} initialY={initialY}>
+        <ControllerComponent {...props} />
+      </DraggableController>
+    );
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6">Controller Dashboard</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {controllers.map((controller, index) => (
-          <div key={index} className="cursor-pointer">
-            {renderController(controller)}
-          </div>
-        ))}
+      <div className="relative h-[calc(100vh-100px)]">
+        {controllers.map((controller, index) => renderController(controller, index))}
       </div>
     </div>
   );
