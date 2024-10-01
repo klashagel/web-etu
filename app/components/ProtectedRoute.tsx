@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
         } else {
           router.push('/login');
         }
-      } catch (error) {
+      } catch {
         router.push('/login');
       }
     };

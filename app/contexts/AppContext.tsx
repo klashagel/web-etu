@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { getUser } from '../utils/api'; // You'll need to implement this function
 
 interface User {

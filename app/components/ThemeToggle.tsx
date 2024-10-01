@@ -10,7 +10,7 @@ export default function ThemeToggle() {
     const theme = localStorage.getItem('theme');
     setIsDark(theme === 'dark');
     document.documentElement.classList.toggle('dark', isDark);
-  }, []);
+  }, [isDark]); // Add isDark to the dependency array
 
   const toggleTheme = () => {
     const newTheme = isDark ? 'light' : 'dark';
