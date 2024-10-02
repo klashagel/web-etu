@@ -4,9 +4,10 @@ interface ResizableControllerProps {
   children: React.ReactNode;
   minWidth: number;
   minHeight: number;
+  isSelected: boolean;
 }
 
-const ResizableController: React.FC<ResizableControllerProps> = ({ children, minWidth, minHeight }) => {
+const ResizableController: React.FC<ResizableControllerProps> = ({ children, minWidth, minHeight, isSelected }) => {
   const [size, setSize] = useState({ width: 300, height: 200 });
   const [isResizing, setIsResizing] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -53,12 +54,14 @@ const ResizableController: React.FC<ResizableControllerProps> = ({ children, min
       style={{ width: `${size.width}px`, height: `${size.height}px` }}
     >
       {children}
-      <div
-        ref={resizeHandleRef}
-        className="absolute bottom-0 right-0 w-4 h-4 bg-gray-400 cursor-se-resize"
-        onMouseDown={startResize}
-        style={{ touchAction: 'none' }}
-      />
+      {isSelected && (
+        <div
+          ref={resizeHandleRef}
+          className="absolute bottom-0 right-0 w-4 h-4 bg-gray-400 cursor-se-resize"
+          onMouseDown={startResize}
+          style={{ touchAction: 'none' }}
+        />
+      )}
     </div>
   );
 };

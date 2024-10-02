@@ -5,6 +5,7 @@ import Epic4Controller from '../components/controllers/Epic4Controller';
 import Sir4Controller from '../components/controllers/Sir4Controller';
 import UnknownController from '../components/controllers/UnknownController';
 import DraggableController from '../components/DraggableController';
+import UserMenu from '../components/UserMenu';
 import { useRouter } from 'next/navigation';
 
 interface Controller {
@@ -43,11 +44,12 @@ const Dashboard = () => {
   };
 
   const renderController = (controller: Controller, index: number) => {
+    const isSelected = controller.IP === selectedController;
     const props = {
       controller,
       onClick: () => handleControllerClick(controller),
       onDoubleClick: () => handleControllerDoubleClick(controller),
-      isSelected: controller.IP === selectedController,
+      isSelected,
     };
 
     let ControllerComponent;
@@ -73,18 +75,25 @@ const Dashboard = () => {
     const initialY = Math.floor(index / columns) * (itemHeight + verticalSpacing);
 
     return (
-      <DraggableController key={controller.IP} initialX={initialX} initialY={initialY}>
+      <DraggableController key={controller.IP} initialX={initialX} initialY={initialY} isSelected={isSelected}>
         <ControllerComponent {...props} />
       </DraggableController>
     );
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6">Controller Dashboard</h1>
-      <div className="relative h-[calc(100vh-100px)]">
-        {controllers.map((controller, index) => renderController(controller, index))}
-      </div>
+    <div className="min-h-screen bg-gray-100">
+      <header className="bg-gray-900 text-white p-4">
+        <div className="container mx-auto flex justify-between items-center">
+          <h1 className="text-xl sm:text-2xl font-bold">Controller Dashboard</h1>
+          <UserMenu />
+        </div>
+      </header>
+      <main className="container mx-auto px-4 py-8">
+        <div className="relative h-[calc(100vh-100px)]">
+          {controllers.map((controller, index) => renderController(controller, index))}
+        </div>
+      </main>
     </div>
   );
 };
