@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Moon, Sun } from 'lucide-react'; // Import icons
 import Image from 'next/image'; // Import the Next.js Image component
+import { useAppContext } from '../contexts/AppContext';
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -11,6 +12,7 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [isDarkTheme, setIsDarkTheme] = useState(true); // State for theme
   const router = useRouter();
+  const { setUser } = useAppContext();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ const LoginPage: React.FC = () => {
 
     // Temporary login logic for testing
     if (username === 'admin' && password === 'password123') {
+      setUser({ username }); // Set the user in the AppContext
       router.push('/dashboard');
     } else {
       setError('Invalid username or password');
@@ -33,6 +36,8 @@ const LoginPage: React.FC = () => {
       });
 
       if (response.ok) {
+        const userData = await response.json();
+        setUser(userData); // Set the user in the AppContext
         router.push('/dashboard');
       } else {
         const data = await response.json();

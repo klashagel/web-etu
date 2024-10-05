@@ -1,0 +1,8 @@
+{
+
+
+  "apiUrl": "http://192.168.1.38:12345",
+  "websocketUrl": "ws://192.168.1.38:8080/ws",
+  "theme": "light",
+  "maxControllers": 10
+}

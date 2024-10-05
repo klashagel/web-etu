@@ -3,14 +3,21 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { User, LogOut } from 'lucide-react';
+import { useAppContext } from '../contexts/AppContext';
 
 const UserMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { setUser } = useAppContext();
 
   const handleLogout = () => {
-    // Implement logout logic here
-    // For now, we'll just redirect to the login page
+    // Clear the user from the AppContext
+    setUser(null);
+    
+    // Close the menu
+    setIsOpen(false);
+    
+    // Redirect to the login page
     router.push('/');
   };
 
